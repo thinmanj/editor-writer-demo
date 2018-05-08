@@ -1,0 +1,21 @@
+- extends "base.haml"
+
+- block title
+    = object.summary
+
+- block content
+    = object.description
+    - if user.is_writer and object.status == 2
+        %form{'method':'post', 'action':"{% url 'send' object.id%}"}
+            - csrf_token
+            Google Document
+            %input(type='text' name='document' required=None)
+
+            %button For Review
+    - if user.is_editor and object.status == 3
+        %a{'href':'{{ object.document }}', 'target':'_blank'} Google Doc
+        %form{'method':'post', 'action':"{% url 'publish' object.id%}"}
+            - csrf_token
+
+            %button Publish
+

@@ -1,0 +1,20 @@
+- extends 'bootstrap.haml'
+
+- load bootstrap3
+
+- block bootstrap3_content
+    .container
+        %h1
+            -block title
+                (no title)
+        %ul.nav.nav-pills
+            %li
+                %a{"href":"{% url 'home' %}"} Home
+            %li
+                %a{"href":"{%url 'logout' %}"} Log out
+            %li
+                = user
+        - autoescape off
+            - bootstrap_messages
+        -  block content
+            (no content)

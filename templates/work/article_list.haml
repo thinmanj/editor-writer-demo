@@ -1,0 +1,23 @@
+- extends "base.haml"
+
+- block title
+    Work Area
+
+- block content
+    %h2 Articles
+    %ul
+        - for article in object_list
+            %li
+                %a{'href': "{% url 'article-detail' article.id %}"}= article.summary
+                - if article.status == 1 and user.is_writer
+                    %form{'method':'post', 'action':"{% url 'take' article.id%}"}
+                        - csrf_token
+
+                        %button Take
+                - if article.status == 3 and user.is_editor
+                    %form{'method':'post', 'action':"{% url 'publish' article.id%}"}
+                        - csrf_token
+
+                        %button Publish
+        - empty
+            %li No Articles available
